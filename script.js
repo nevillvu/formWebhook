@@ -78,7 +78,7 @@ resetBtn.addEventListener("click", () => {
 });
 
 // chặn F12 / chuột phải (cơ bản)
-/*document.addEventListener("contextmenu", (e) => e.preventDefault());
+document.addEventListener("contextmenu", (e) => e.preventDefault());
 document.addEventListener("keydown", (e) => {
   const k = e.key;
   if (
@@ -89,4 +89,3 @@ document.addEventListener("keydown", (e) => {
     e.preventDefault();
   }
 });
-*/
