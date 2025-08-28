@@ -2,20 +2,20 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <title>Form  Webhook</title>
+  <title>Form Webhook</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="card">
     <h1 class="title">Submit dữ liệu</h1>
-    <p class="subtitle">Chọn loại input, điền dữ liệu rồi gửi đến webhook.</p>
+    <p class="subtitle">Chọn loại input, điền dữ liệu rồi gửi đến webhook n8n.</p>
 
     <form id="appForm">
       <!-- Radio chọn loại -->
       <div class="radio-options">
         <div>
-          <input type="radio" id="radioChat" name="inputType" value="chat" checked>
+          <input type="radio" id="radioChat" name="inputType" value="chat">
           <label for="radioChat" class="radio-label">Input Chat</label>
         </div>
         <div>
@@ -25,109 +25,61 @@
       </div>
 
       <!-- Chat Section -->
-      <div id="chatSection" class="section show">
+      <div id="chatSection" class="section hidden">
         <div class="input-box">
-          <select required id="projectForm" name="projectForm" class="input">
+          <select required id="projectChat" name="projectChat" class="input">
             <option value="" disabled selected hidden></option>
-            <option value="hay-ho-corner">Hay Ho Corner</option>
-            <option value="nha-cua-han">Nhà của HAN</option>
-            <option value="taptica">Taptica</option>
-            <option value="gau-meo">Gấu Mèo</option>
+            <option value="Hay Ho Corner">Hay Ho Corner</option>
+            <option value="Nhà của HAN">Nhà của HAN</option>
+            <option value="Taptica">Taptica</option>
+            <option value="Gấu Mèo">Gấu Mèo</option>
           </select>
-          <label class="fancy-label">
-            <span class="char" style="--index:0">P</span>
-            <span class="char" style="--index:1">r</span>
-            <span class="char" style="--index:2">o</span>
-            <span class="char" style="--index:3">j</span>
-            <span class="char" style="--index:4">e</span>
-            <span class="char" style="--index:5">c</span>
-            <span class="char" style="--index:6">t</span>
-          </label>
+          <label class="fancy-label">Project</label>
         </div>
 
         <div class="input-box">
           <textarea required id="urlChat" name="urlChat" class="input"></textarea>
-          <label class="fancy-label">
-            <span class="char" style="--index:0">U</span>
-            <span class="char" style="--index:1">R</span>
-            <span class="char" style="--index:2">L</span>
-          </label>
+          <label class="fancy-label">URL</label>
         </div>
       </div>
 
       <!-- Form Section -->
-      <div id="formSection" class="section">
+      <div id="formSection" class="section hidden">
         <div class="input-box">
-          <select required id="projectForm" name="projectForm" class="input">
+          <select required id="projectFormSelect" name="projectForm" class="input">
             <option value="" disabled selected hidden></option>
-            <option value="hay-ho-corner">Hay Ho Corner</option>
-            <option value="nha-cua-han">Nhà của HAN</option>
-            <option value="taptica">Taptica</option>
-            <option value="gau-meo">Gấu Mèo</option>
+            <option value="Hay Ho Corner">Hay Ho Corner</option>
+            <option value="Nhà của HAN">Nhà của HAN</option>
+            <option value="Taptica">Taptica</option>
+            <option value="Gấu Mèo">Gấu Mèo</option>
           </select>
-          <label class="fancy-label">
-            <span class="char" style="--index:0">P</span>
-            <span class="char" style="--index:1">r</span>
-            <span class="char" style="--index:2">o</span>
-            <span class="char" style="--index:3">j</span>
-            <span class="char" style="--index:4">e</span>
-            <span class="char" style="--index:5">c</span>
-            <span class="char" style="--index:6">t</span>
-          </label>
+          <label class="fancy-label">Project</label>
         </div>
 
         <div class="input-box">
           <textarea required id="imgForm" name="imgForm" class="input"></textarea>
-          <label class="fancy-label">
-            <span class="char" style="--index:0">I</span>
-            <span class="char" style="--index:1">m</span>
-            <span class="char" style="--index:2">a</span>
-            <span class="char" style="--index:3">g</span>
-            <span class="char" style="--index:4">e</span>
-          </label>
+          <label class="fancy-label">Image</label>
         </div>
 
         <div class="input-box">
           <textarea required id="affForm" name="affForm" class="input"></textarea>
-          <label class="fancy-label">
-            <span class="char" style="--index:0">A</span>
-            <span class="char" style="--index:1">f</span>
-            <span class="char" style="--index:2">f</span>
-            <span class="char" style="--index:3">i</span>
-            <span class="char" style="--index:4">l</span>
-            <span class="char" style="--index:5">i</span>
-            <span class="char" style="--index:6">a</span>
-            <span class="char" style="--index:7">t</span>
-            <span class="char" style="--index:8">e</span>
-          </label>
+          <label class="fancy-label">Affiliate</label>
         </div>
 
         <div class="input-box">
           <textarea required id="transForm" name="transForm" class="input"></textarea>
-          <label class="fancy-label">
-            <span class="char" style="--index:0">T</span>
-            <span class="char" style="--index:1">r</span>
-            <span class="char" style="--index:2">a</span>
-            <span class="char" style="--index:3">n</span>
-            <span class="char" style="--index:4">s</span>
-            <span class="char" style="--index:5">c</span>
-            <span class="char" style="--index:6">r</span>
-            <span class="char" style="--index:7">i</span>
-            <span class="char" style="--index:8">p</span>
-            <span class="char" style="--index:9">t</span>
-          </label>
+          <label class="fancy-label">Transcript</label>
         </div>
       </div>
 
-      <input type="hidden" id="__token" name="token">
-
-      <div class="actions">
+      <!-- Actions -->
+      <div class="actions hidden" id="formActions">
         <button type="submit" class="btn btn-primary">Gửi dữ liệu</button>
         <button type="button" class="btn btn-ghost" id="resetBtn">Reset</button>
       </div>
 
       <div class="note">
-        * Có rate limit, chặn F12/click phải cơ bản. Token sẽ được check lại trong workflow n8n.
+        * Có rate limit, chặn F12/click phải cơ bản.
       </div>
 
       <div id="status" class="status muted">Chưa gửi.</div>
