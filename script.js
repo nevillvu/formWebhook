@@ -1,5 +1,5 @@
 // CONFIG
-const WEBHOOK_URL = "https://n8n.sysflow.me/webhook/inputForm";
+const WEBHOOK_URL = "https://n8n.sysflow.me/webhook-test/inputForm";
 
 // DOM
 const radioChat = document.getElementById("radioChat");
@@ -100,7 +100,7 @@ resetBtn.addEventListener("click", () => {
 });
 
 // ================= Chặn F12 / chuột phải =================
-document.addEventListener("contextmenu", e => e.preventDefault());
+/*document.addEventListener("contextmenu", e => e.preventDefault());
 document.addEventListener("keydown", e => {
   const k = e.key.toUpperCase();
   if (
@@ -110,7 +110,7 @@ document.addEventListener("keydown", e => {
   ) {
     e.preventDefault();
   }
-});
+});*/
 
 // ================= Khởi tạo =================
 document.addEventListener("DOMContentLoaded", updateSection);
