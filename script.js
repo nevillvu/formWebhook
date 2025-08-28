@@ -1,58 +1,72 @@
 // CONFIG
-const WEBHOOK_URL = "https://cndn.net/webhook/submit";
-const STATIC_TOKEN = "MY_STATIC_SECRET_TOKEN";
+const WEBHOOK_URL = "https://n8n.sysflow.me/webhook/inputForm";
 
-// inject token (base64, không lộ plain text trong source)
-function injectToken() {
-  document.getElementById("__token").value = btoa(STATIC_TOKEN);
-}
-injectToken();
-
-// radio toggle
+// DOM
 const radioChat = document.getElementById("radioChat");
 const radioForm = document.getElementById("radioForm");
 const chatSection = document.getElementById("chatSection");
 const formSection = document.getElementById("formSection");
-
-function updateSection() {
-  if (radioChat.checked) {
-    chatSection.classList.add("show");
-    formSection.classList.remove("show");
-  } else {
-    formSection.classList.add("show");
-    chatSection.classList.remove("show");
-  }
-}
-radioChat.addEventListener("change", updateSection);
-radioForm.addEventListener("change", updateSection);
-
-// rate limit + submit
-let lastSubmitAt = 0;
-const RATE_WINDOW_MS = 8000;
-
+const formActions = document.getElementById("formActions");
 const form = document.getElementById("appForm");
 const statusEl = document.getElementById("status");
 const resetBtn = document.getElementById("resetBtn");
 
+// ================= Helper =================
+function setRequiredForSection(section, isRequired) {
+  const fields = section.querySelectorAll("input, textarea, select");
+  fields.forEach(f => f.required = isRequired);
+}
+
 function setStatus(msg, type = "muted") {
+  if (!statusEl) return;
   statusEl.className = `status ${type}`;
   statusEl.textContent = msg;
 }
 
-form.addEventListener("submit", async (e) => {
+function updateSection() {
+  if (radioChat.checked) {
+    chatSection.classList.remove("hidden");
+    formSection.classList.add("hidden");
+    formActions.classList.remove("hidden");
+    setRequiredForSection(chatSection, true);
+    setRequiredForSection(formSection, false);
+  } else if (radioForm.checked) {
+    formSection.classList.remove("hidden");
+    chatSection.classList.add("hidden");
+    formActions.classList.remove("hidden");
+    setRequiredForSection(formSection, true);
+    setRequiredForSection(chatSection, false);
+  } else {
+    chatSection.classList.add("hidden");
+    formSection.classList.add("hidden");
+    formActions.classList.add("hidden");
+    setRequiredForSection(chatSection, false);
+    setRequiredForSection(formSection, false);
+  }
+}
+
+// ================= Radio click =================
+radioChat.addEventListener("click", updateSection);
+radioForm.addEventListener("click", updateSection);
+
+// ================= Submit =================
+let lastSubmitAt = 0;
+const RATE_WINDOW_MS = 8000;
+
+form.addEventListener("submit", async e => {
   e.preventDefault();
+
   const now = Date.now();
   if (now - lastSubmitAt < RATE_WINDOW_MS) {
     return setStatus(
-      `Bạn đang gửi quá nhanh. Đợi ${Math.ceil(
-        (RATE_WINDOW_MS - (now - lastSubmitAt)) / 1000
-      )}s…`,
+      `Bạn đang gửi quá nhanh. Đợi ${Math.ceil((RATE_WINDOW_MS - (now - lastSubmitAt)) / 1000)}s…`,
       "err"
     );
   }
   lastSubmitAt = now;
 
   setStatus("Đang gửi dữ liệu…", "muted");
+
   const fd = new FormData(form);
   fd.append("_client_ts", String(now));
   fd.append("_client_ua", navigator.userAgent || "unknown");
@@ -60,32 +74,43 @@ form.addEventListener("submit", async (e) => {
   try {
     const res = await fetch(WEBHOOK_URL, { method: "POST", body: fd });
     if (res.ok) {
-      const text = await res.text().catch(() => "OK");
-      setStatus(`Gửi thành công: ${text.slice(0, 180)}`, "ok");
+      let displayMsg = "";
+      try {
+        // thử parse JSON
+        const data = await res.clone().json();
+        if (data.message) displayMsg = `✅ ${data.message}`;
+        else displayMsg = JSON.stringify(data);
+      } catch {
+        displayMsg = await res.text();
+      }
+      setStatus(displayMsg, "ok");
     } else {
-      setStatus(`Server trả lỗi ${res.status}.`, "err");
+      setStatus(`❌ Server trả lỗi ${res.status}.`, "err");
     }
-  } catch (err) {
-    setStatus("Không thể kết nối webhook.", "err");
+  } catch {
+    setStatus("❌ Không thể kết nối webhook.", "err");
   }
 });
 
+// ================= Reset =================
 resetBtn.addEventListener("click", () => {
   form.reset();
-  injectToken();
   updateSection();
   setStatus("Đã reset form.", "muted");
 });
 
-// chặn F12 / chuột phải (cơ bản)
-document.addEventListener("contextmenu", (e) => e.preventDefault());
-document.addEventListener("keydown", (e) => {
-  const k = e.key;
+// ================= Chặn F12 / chuột phải =================
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("keydown", e => {
+  const k = e.key.toUpperCase();
   if (
     k === "F12" ||
-    (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(k.toUpperCase())) ||
-    (e.ctrlKey && k.toUpperCase() === "U")
+    (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(k)) ||
+    (e.ctrlKey && k === "U")
   ) {
     e.preventDefault();
   }
 });
+
+// ================= Khởi tạo =================
+document.addEventListener("DOMContentLoaded", updateSection);
