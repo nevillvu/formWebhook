@@ -15,19 +15,27 @@
       <!-- Radio chọn loại -->
       <div class="radio-options">
         <div>
-          <input type="radio" id="radioChat" name="inputType" value="chat">
-          <label for="radioChat" class="radio-label">Input Chat</label>
+          <input type="radio" id="radioAuto" name="inputType" value="auto">
+          <label for="radioAuto" class="radio-label">Tự động (URL bài viết)</label>
         </div>
         <div>
-          <input type="radio" id="radioForm" name="inputType" value="form">
-          <label for="radioForm" class="radio-label">Input Form</label>
+          <input type="radio" id="radioManual" name="inputType" value="manual">
+          <label for="radioManual" class="radio-label">Thủ công (nhập dữ liệu)</label>
         </div>
       </div>
 
-      <!-- Chat Section -->
-      <div id="chatSection" class="section hidden">
+      <!-- Auto Section -->
+      <div id="autoSection" class="section hidden">
         <div class="input-box">
-          <select required id="projectChat" name="projectChat" class="input">
+          <textarea required id="urlAuto" name="urlAuto" class="input"></textarea>
+          <label class="fancy-label">URL bài viết</label>
+        </div>
+      </div>
+
+      <!-- Manual Section -->
+      <div id="manualSection" class="section hidden">
+        <div class="input-box">
+          <select required id="projectManual" name="projectManual" class="input">
             <option value="" disabled selected hidden></option>
             <option value="Hay Ho Corner">Hay Ho Corner</option>
             <option value="Nhà của HAN">Nhà của HAN</option>
@@ -38,37 +46,23 @@
         </div>
 
         <div class="input-box">
-          <textarea required id="urlChat" name="urlChat" class="input"></textarea>
-          <label class="fancy-label">URL</label>
-        </div>
-      </div>
-
-      <!-- Form Section -->
-      <div id="formSection" class="section hidden">
-        <div class="input-box">
-          <select required id="projectFormSelect" name="projectForm" class="input">
-            <option value="" disabled selected hidden></option>
-            <option value="Hay Ho Corner">Hay Ho Corner</option>
-            <option value="Nhà của HAN">Nhà của HAN</option>
-            <option value="Taptica">Taptica</option>
-            <option value="Gấu Mèo">Gấu Mèo</option>
-          </select>
-          <label class="fancy-label">Project</label>
+          <textarea id="titleManual" name="titleManual" class="input"></textarea>
+          <label class="fancy-label">Tiêu đề</label>
         </div>
 
         <div class="input-box">
-          <textarea required id="imgForm" name="imgForm" class="input"></textarea>
-          <label class="fancy-label">Image</label>
+          <textarea required id="contentManual" name="contentManual" class="input"></textarea>
+          <label class="fancy-label">Content gốc</label>
         </div>
 
         <div class="input-box">
-          <textarea required id="affForm" name="affForm" class="input"></textarea>
-          <label class="fancy-label">Affiliate</label>
+          <textarea id="imgManual" name="imgManual" class="input"></textarea>
+          <label class="fancy-label">Image URL(s)</label>
         </div>
 
         <div class="input-box">
-          <textarea required id="transForm" name="transForm" class="input"></textarea>
-          <label class="fancy-label">Transcript</label>
+          <textarea id="affManual" name="affManual" class="input"></textarea>
+          <label class="fancy-label">Affiliate URL(s)</label>
         </div>
       </div>
 
