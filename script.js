@@ -4,17 +4,26 @@ const WEBHOOK_URL = "https://n8n.sysflow.me/webhook-test/inputForm";
 // DOM
 const radioAuto = document.getElementById("radioAuto");
 const radioManual = document.getElementById("radioManual");
-const chatSection = document.getElementById("chatSection");
-const formSection = document.getElementById("formSection");
+
+const autoSection = document.getElementById("autoSection");
+const manualSection = document.getElementById("manualSection");
+
 const formActions = document.getElementById("formActions");
 const form = document.getElementById("appForm");
 const statusEl = document.getElementById("status");
 const resetBtn = document.getElementById("resetBtn");
 
 // ================= Helper =================
-function setRequiredForSection(section, isRequired) {
-  const fields = section.querySelectorAll("input, textarea, select");
-  fields.forEach(f => f.required = isRequired);
+function setRequiredForSection(section, requiredFields = []) {
+  const fields = section.querySelectorAll("textarea, select, input");
+  fields.forEach(f => {
+    // field nào nằm trong danh sách requiredFields thì set required = true
+    if (requiredFields.includes(f.id)) {
+      f.required = true;
+    } else {
+      f.required = false;
+    }
+  });
 }
 
 function setStatus(msg, type = "muted") {
@@ -24,30 +33,35 @@ function setStatus(msg, type = "muted") {
 }
 
 function updateSection() {
-  if (radioChat.checked) {
-    chatSection.classList.remove("hidden");
-    formSection.classList.add("hidden");
+  if (radioAuto.checked) {
+    autoSection.classList.remove("hidden");
+    manualSection.classList.add("hidden");
     formActions.classList.remove("hidden");
-    setRequiredForSection(chatSection, true);
-    setRequiredForSection(formSection, false);
-  } else if (radioForm.checked) {
-    formSection.classList.remove("hidden");
-    chatSection.classList.add("hidden");
+
+    // Auto: chỉ URL bắt buộc
+    setRequiredForSection(autoSection, ["urlAuto"]);
+    setRequiredForSection(manualSection, []);
+  } else if (radioManual.checked) {
+    manualSection.classList.remove("hidden");
+    autoSection.classList.add("hidden");
     formActions.classList.remove("hidden");
-    setRequiredForSection(formSection, true);
-    setRequiredForSection(chatSection, false);
+
+    // Manual: Project + Content bắt buộc
+    setRequiredForSection(manualSection, ["projectManual", "contentManual"]);
+    setRequiredForSection(autoSection, []);
   } else {
-    chatSection.classList.add("hidden");
-    formSection.classList.add("hidden");
+    autoSection.classList.add("hidden");
+    manualSection.classList.add("hidden");
     formActions.classList.add("hidden");
-    setRequiredForSection(chatSection, false);
-    setRequiredForSection(formSection, false);
+
+    setRequiredForSection(autoSection, []);
+    setRequiredForSection(manualSection, []);
   }
 }
 
 // ================= Radio click =================
-radioChat.addEventListener("click", updateSection);
-radioForm.addEventListener("click", updateSection);
+radioAuto.addEventListener("click", updateSection);
+radioManual.addEventListener("click", updateSection);
 
 // ================= Submit =================
 let lastSubmitAt = 0;
@@ -76,7 +90,6 @@ form.addEventListener("submit", async e => {
     if (res.ok) {
       let displayMsg = "";
       try {
-        // thử parse JSON
         const data = await res.clone().json();
         if (data.message) displayMsg = `✅ ${data.message}`;
         else displayMsg = JSON.stringify(data);
@@ -98,19 +111,6 @@ resetBtn.addEventListener("click", () => {
   updateSection();
   setStatus("Đã reset form.", "muted");
 });
-
-// ================= Chặn F12 / chuột phải =================
-/*document.addEventListener("contextmenu", e => e.preventDefault());
-document.addEventListener("keydown", e => {
-  const k = e.key.toUpperCase();
-  if (
-    k === "F12" ||
-    (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(k)) ||
-    (e.ctrlKey && k === "U")
-  ) {
-    e.preventDefault();
-  }
-});*/
 
 // ================= Khởi tạo =================
 document.addEventListener("DOMContentLoaded", updateSection);
