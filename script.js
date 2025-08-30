@@ -2,8 +2,8 @@
 const WEBHOOK_URL = "https://n8n.sysflow.me/webhook-test/inputForm";
 
 // DOM
-const radioChat = document.getElementById("radioChat");
-const radioForm = document.getElementById("radioForm");
+const radioAuto = document.getElementById("radioAuto");
+const radioManual = document.getElementById("radioManual");
 const chatSection = document.getElementById("chatSection");
 const formSection = document.getElementById("formSection");
 const formActions = document.getElementById("formActions");
