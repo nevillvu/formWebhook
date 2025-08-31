@@ -98,32 +98,39 @@ body {
   border-color: var(--accent);
   box-shadow: 0 0 10px rgba(34, 211, 238, 0.4);
 }
-.input-box .fancy-label {
-  position: absolute;
-  left: 14px;
-  top: 14px;
-  font-size: 15px;
+
+/* Các quy tắc CSS mới cho hiệu ứng label */
+.input-box .label {
   color: var(--muted);
+  font-size: 15px;
+  font-weight: normal;
+  position: absolute;
   pointer-events: none;
+  left: 12px;
+  top: 14px;
   display: flex;
-  gap: 1px;
-  transition: all 0.3s ease;
-  background: transparent;
 }
-/* Floating label active */
-.input-box input:focus ~ .fancy-label,
-.input-box textarea:focus ~ .fancy-label,
-.input-box input:valid ~ .fancy-label,
-.input-box textarea:valid ~ .fancy-label,
-.input-box select:valid ~ .fancy-label,
-.input-box select:focus ~ .fancy-label {
-  transform: translateY(-24px);
+
+.input-box .char {
+  transition: .2s ease all;
+  transition-delay: calc(var(--index) * .05s);
+}
+
+.input-box input:focus~label .char,
+.input-box textarea:focus~label .char,
+.input-box select:focus~label .char,
+.input-box input:valid~label .char,
+.input-box textarea:valid~label .char,
+.input-box select:valid~label .char {
+  transform: translateY(-26px);
   font-size: 13px;
   color: var(--accent);
   background-color: #0b1324;
   padding: 0 3px;
   border-radius: 4px;
 }
+/* Kết thúc các quy tắc CSS mới */
+
 /* ================== Radio ================== */
 .radio-options {
   display: flex;
