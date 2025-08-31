@@ -230,3 +230,7 @@ input[type="radio"]:checked + .radio-label {
 .hidden {
   display: none !important;
 }
+
+.input-box select:required:invalid + label {
+    display: none;
+}
