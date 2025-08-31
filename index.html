@@ -12,7 +12,6 @@
     <p class="subtitle">Điền input vào, rồi để WEBHOOK lo phần còn lại 😉</p>
 
     <form id="appForm">
-      <!-- Radio chọn loại -->
       <div class="radio-options">
         <div>
           <input type="radio" id="radioAuto" name="inputType" value="auto">
@@ -24,7 +23,6 @@
         </div>
       </div>
 
-      <!-- Auto Section -->
       <div id="autoSection" class="section hidden">
         <div class="input-box">
           <select required id="projectAuto" name="projectAuto" class="input">
@@ -34,16 +32,45 @@
             <option value="Taptica">Taptica</option>
             <option value="Gấu Mèo">Gấu Mèo</option>
           </select>
-          <label>Lựa chọn Project</label>
+          <label class="label">
+            <span class="char" style="--index: 0">L</span>
+            <span class="char" style="--index: 1">ự</span>
+            <span class="char" style="--index: 2">a</span>
+            <span class="char" style="--index: 3"> </span>
+            <span class="char" style="--index: 4">c</span>
+            <span class="char" style="--index: 5">h</span>
+            <span class="char" style="--index: 6">ọ</span>
+            <span class="char" style="--index: 7">n</span>
+            <span class="char" style="--index: 8"> </span>
+            <span class="char" style="--index: 9">P</span>
+            <span class="char" style="--index: 10">r</span>
+            <span class="char" style="--index: 11">o</span>
+            <span class="char" style="--index: 12">j</span>
+            <span class="char" style="--index: 13">e</span>
+            <span class="char" style="--index: 14">c</span>
+            <span class="char" style="--index: 15">t</span>
+          </label>
         </div>
 
         <div class="input-box">
           <textarea required id="urlAuto" name="urlAuto" class="input"></textarea>
-          <label>URL bài viết</label>
+          <label class="label">
+            <span class="char" style="--index: 0">U</span>
+            <span class="char" style="--index: 1">R</span>
+            <span class="char" style="--index: 2">L</span>
+            <span class="char" style="--index: 3"> </span>
+            <span class="char" style="--index: 4">b</span>
+            <span class="char" style="--index: 5">à</span>
+            <span class="char" style="--index: 6">i</span>
+            <span class="char" style="--index: 7"> </span>
+            <span class="char" style="--index: 8">v</span>
+            <span class="char" style="--index: 9">i</span>
+            <span class="char" style="--index: 10">ế</span>
+            <span class="char" style="--index: 11">t</span>
+          </label>
         </div>
       </div>
 
-      <!-- Manual Section -->
       <div id="manualSection" class="section hidden">
         <div class="input-box">
           <select required id="projectManual" name="projectManual" class="input">
@@ -53,31 +80,97 @@
             <option value="Taptica">Taptica</option>
             <option value="Gấu Mèo">Gấu Mèo</option>
           </select>
-          <label>Lựa chọn Project</label>
+          <label class="label">
+            <span class="char" style="--index: 0">L</span>
+            <span class="char" style="--index: 1">ự</span>
+            <span class="char" style="--index: 2">a</span>
+            <span class="char" style="--index: 3"> </span>
+            <span class="char" style="--index: 4">c</span>
+            <span class="char" style="--index: 5">h</span>
+            <span class="char" style="--index: 6">ọ</span>
+            <span class="char" style="--index: 7">n</span>
+            <span class="char" style="--index: 8"> </span>
+            <span class="char" style="--index: 9">P</span>
+            <span class="char" style="--index: 10">r</span>
+            <span class="char" style="--index: 11">o</span>
+            <span class="char" style="--index: 12">j</span>
+            <span class="char" style="--index: 13">e</span>
+            <span class="char" style="--index: 14">c</span>
+            <span class="char" style="--index: 15">t</span>
+          </label>
         </div>
 
         <div class="input-box">
           <textarea id="titleManual" name="titleManual" class="input"></textarea>
-          <label>Tiêu đề</label>
+          <label class="label">
+            <span class="char" style="--index: 0">T</span>
+            <span class="char" style="--index: 1">i</span>
+            <span class="char" style="--index: 2">ê</span>
+            <span class="char" style="--index: 3">u</span>
+            <span class="char" style="--index: 4"> </span>
+            <span class="char" style="--index: 5">đ</span>
+            <span class="char" style="--index: 6">ề</span>
+          </label>
         </div>
 
         <div class="input-box">
           <textarea required id="contentManual" name="contentManual" class="input"></textarea>
-          <label>Content gốc</label>
+          <label class="label">
+            <span class="char" style="--index: 0">C</span>
+            <span class="char" style="--index: 1">o</span>
+            <span class="char" style="--index: 2">n</span>
+            <span class="char" style="--index: 3">t</span>
+            <span class="char" style="--index: 4">e</span>
+            <span class="char" style="--index: 5">n</span>
+            <span class="char" style="--index: 6">t</span>
+            <span class="char" style="--index: 7"> </span>
+            <span class="char" style="--index: 8">g</span>
+            <span class="char" style="--index: 9">ố</span>
+            <span class="char" style="--index: 10">c</span>
+          </label>
         </div>
 
         <div class="input-box">
           <textarea id="imgManual" name="imgManual" class="input"></textarea>
-          <label>Image URL(s)</label>
+          <label class="label">
+            <span class="char" style="--index: 0">I</span>
+            <span class="char" style="--index: 1">m</span>
+            <span class="char" style="--index: 2">a</span>
+            <span class="char" style="--index: 3">g</span>
+            <span class="char" style="--index: 4">e</span>
+            <span class="char" style="--index: 5"> </span>
+            <span class="char" style="--index: 6">U</span>
+            <span class="char" style="--index: 7">R</span>
+            <span class="char" style="--index: 8">L</span>
+            <span class="char" style="--index: 9">(</span>
+            <span class="char" style="--index: 10">s</span>
+            <span class="char" style="--index: 11">)</span>
+          </label>
         </div>
 
         <div class="input-box">
           <textarea id="affManual" name="affManual" class="input"></textarea>
-          <label>Affiliate URL(s)</label>
+          <label class="label">
+            <span class="char" style="--index: 0">A</span>
+            <span class="char" style="--index: 1">f</span>
+            <span class="char" style="--index: 2">f</span>
+            <span class="char" style="--index: 3">i</span>
+            <span class="char" style="--index: 4">l</span>
+            <span class="char" style="--index: 5">i</span>
+            <span class="char" style="--index: 6">a</span>
+            <span class="char" style="--index: 7">t</span>
+            <span class="char" style="--index: 8">e</span>
+            <span class="char" style="--index: 9"> </span>
+            <span class="char" style="--index: 10">U</span>
+            <span class="char" style="--index: 11">R</span>
+            <span class="char" style="--index: 12">L</span>
+            <span class="char" style="--index: 13">(</span>
+            <span class="char" style="--index: 14">s</span>
+            <span class="char" style="--index: 15">)</span>
+          </label>
         </div>
       </div>
 
-      <!-- Actions -->
       <div class="actions hidden" id="formActions">
         <button type="submit" class="btn btn-primary">Gửi dữ liệu</button>
         <button type="button" class="btn btn-ghost" id="resetBtn">Reset</button>
