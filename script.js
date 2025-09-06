@@ -1,116 +1,104 @@
-// CONFIG
-const WEBHOOK_URL = "https://n8n.sysflow.me/webhook-test/inputForm";
+const WEBHOOK_URL = 'https://n8n.sysflow.me/webhook-test/inputForm';
 
-// DOM
-const radioChat = document.getElementById("radioChat");
-const radioForm = document.getElementById("radioForm");
-const chatSection = document.getElementById("chatSection");
-const formSection = document.getElementById("formSection");
-const formActions = document.getElementById("formActions");
-const form = document.getElementById("appForm");
-const statusEl = document.getElementById("status");
-const resetBtn = document.getElementById("resetBtn");
+let lastSubmitTime = 0;
+const RATE_LIMIT_SECONDS = 10;
 
-// ================= Helper =================
-function setRequiredForSection(section, isRequired) {
-  const fields = section.querySelectorAll("input, textarea, select");
-  fields.forEach(f => f.required = isRequired);
+// Chức năng chuyển tab
+function showForm(formId) {
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+    document.getElementById(formId + '-form').classList.add('active');
+    event.currentTarget.classList.add('active');
 }
 
-function setStatus(msg, type = "muted") {
-  if (!statusEl) return;
-  statusEl.className = `status ${type}`;
-  statusEl.textContent = msg;
+// Chức năng clear form
+function clearForm(formId) {
+    document.getElementById(formId).reset();
 }
 
-function updateSection() {
-  if (radioChat.checked) {
-    chatSection.classList.remove("hidden");
-    formSection.classList.add("hidden");
-    formActions.classList.remove("hidden");
-    setRequiredForSection(chatSection, true);
-    setRequiredForSection(formSection, false);
-  } else if (radioForm.checked) {
-    formSection.classList.remove("hidden");
-    chatSection.classList.add("hidden");
-    formActions.classList.remove("hidden");
-    setRequiredForSection(formSection, true);
-    setRequiredForSection(chatSection, false);
-  } else {
-    chatSection.classList.add("hidden");
-    formSection.classList.add("hidden");
-    formActions.classList.add("hidden");
-    setRequiredForSection(chatSection, false);
-    setRequiredForSection(formSection, false);
-  }
+// Chức năng hiển thị trạng thái
+function updateStatus(message, type) {
+    const statusMessage = document.getElementById('status-message');
+    statusMessage.textContent = message;
+    statusMessage.style.backgroundColor =
+        type === 'success' ? '#10b981' :
+        type === 'error' ? '#ef4444' :
+        '#6b7280';
+    statusMessage.style.opacity = '1';
+
+    setTimeout(() => {
+        statusMessage.style.opacity = '0';
+    }, 3000);
 }
 
-// ================= Radio click =================
-radioChat.addEventListener("click", updateSection);
-radioForm.addEventListener("click", updateSection);
+// Gửi dữ liệu vào webhook + rate limit
+async function sendData(formElement, formType) {
+    const currentTime = Date.now();
+    const timeSinceLastSubmit = (currentTime - lastSubmitTime) / 1000;
 
-// ================= Submit =================
-let lastSubmitAt = 0;
-const RATE_WINDOW_MS = 8000;
-
-form.addEventListener("submit", async e => {
-  e.preventDefault();
-
-  const now = Date.now();
-  if (now - lastSubmitAt < RATE_WINDOW_MS) {
-    return setStatus(
-      `Bạn đang gửi quá nhanh. Đợi ${Math.ceil((RATE_WINDOW_MS - (now - lastSubmitAt)) / 1000)}s…`,
-      "err"
-    );
-  }
-  lastSubmitAt = now;
-
-  setStatus("Đang gửi dữ liệu…", "muted");
-
-  const fd = new FormData(form);
-  fd.append("_client_ts", String(now));
-  fd.append("_client_ua", navigator.userAgent || "unknown");
-
-  try {
-    const res = await fetch(WEBHOOK_URL, { method: "POST", body: fd });
-    if (res.ok) {
-      let displayMsg = "";
-      try {
-        // thử parse JSON
-        const data = await res.clone().json();
-        if (data.message) displayMsg = `✅ ${data.message}`;
-        else displayMsg = JSON.stringify(data);
-      } catch {
-        displayMsg = await res.text();
-      }
-      setStatus(displayMsg, "ok");
-    } else {
-      setStatus(`❌ Server trả lỗi ${res.status}.`, "err");
+    if (timeSinceLastSubmit < RATE_LIMIT_SECONDS) {
+        const timeLeft = Math.ceil(RATE_LIMIT_SECONDS - timeSinceLastSubmit);
+        updateStatus(`Vui lòng chờ ${timeLeft} giây trước khi gửi lại. ⏳`, 'error');
+        return;
     }
-  } catch {
-    setStatus("❌ Không thể kết nối webhook.", "err");
-  }
+
+    lastSubmitTime = currentTime;
+
+    const submitBtn = formElement.querySelector('.submit-btn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Đang gửi...';
+
+    const formData = new FormData(formElement);
+    const data = {};
+    formData.forEach((value, key) => {
+        data[key] = value;
+    });
+    data.formType = formType;
+
+    try {
+        const response = await fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (response.ok) {
+            updateStatus('Gửi thành công! ✅', 'success');
+        } else {
+            updateStatus('Có lỗi khi gửi. ❌', 'error');
+        }
+    } catch (error) {
+        updateStatus('Mạng hoặc server bị lỗi. ❌', 'error');
+        console.error('Error:', error);
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Gửi';
+    }
+}
+
+// Lắng nghe sự kiện submit form
+document.getElementById('auto-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    sendData(this, 'auto');
 });
 
-// ================= Reset =================
-resetBtn.addEventListener("click", () => {
-  form.reset();
-  updateSection();
-  setStatus("Đã reset form.", "muted");
+document.getElementById('manual-form-content').addEventListener('submit', function(event) {
+    event.preventDefault();
+    sendData(this, 'manual');
 });
 
-// ================= Chặn F12 / chuột phải =================
-/*document.addEventListener("contextmenu", e => e.preventDefault());
-document.addEventListener("keydown", e => {
-  const k = e.key.toUpperCase();
-  if (
-    k === "F12" ||
-    (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(k)) ||
-    (e.ctrlKey && k === "U")
-  ) {
+// Chặn chuột phải và F12
+document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();
+  updateStatus('Chức năng chuột phải đã bị tắt. 🔒', 'info');
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
     e.preventDefault();
+    updateStatus('Công cụ nhà phát triển đã bị chặn. ⛔', 'info');
   }
-});*/
-
-// ================= Khởi tạo =================
-document.addEventListener("DOMContentLoaded", updateSection);
+});
