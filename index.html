@@ -4,26 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Modern Tabbed Forms</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
     <div class="main-container">
       <div class="form-wrapper">
         <img src="https://ucarecdn.com/e5a292b3-0725-4cb0-a08e-e2746a6b3484/inquiryform.png" alt="Form Illustration" class="form-image" />
         <div class="tabs">
-          <button class="tab-btn active" onclick="showForm('automatic')">Tự động</button>
+          <button class="tab-btn active" onclick="showForm('automatic')">Tự động từ URL</button>
           <button class="tab-btn" onclick="showForm('manual')">Thủ công</button>
+          <button class="tab-btn" onclick="showForm('transcript')">Transcript YT</button>
         </div>
         <div id="automatic-form" class="tab-content active">
           <form id="auto-form" action="#" method="POST">
             <div class="form-header">
-              <h2 class="form-title">Tự động Form</h2>
-              <p class="form-description"> Sử dụng form này để tạo nội dung tự động. </p>
+              <h2 class="form-title">URL Form</h2>
+              <p class="form-description"> Sử dụng form này để tạo nội dung tự động từ URL Post có sẵn. </p>
             </div>
             <div class="form-group">
               <label for="auto-project" class="form-label">Lựa chọn project</label>
               <select name="auto-project" id="auto-project" class="form-select" required>
-                <option value="" disabled selected>Chọn 1 project</option>
+                <option value="" disabled selected>Chọn Project</option>
                 <option value="hay-ho-corner">Hay Ho Corner</option>
                 <option value="nha-cua-han">Nhà của HAN</option>
                 <option value="taptica">Taptica</option>
@@ -33,10 +34,11 @@
             <div class="form-group">
               <label for="auto-text-input" class="form-label">Nhập nội dung</label>
               <input type="text" name="auto-text-input" id="auto-text-input" class="form-input" required />
+              <div id="domain-status" style="margin-top:4px;font-size:0.95em;"></div>
             </div>
             <div class="form-actions">
               <button type="submit" class="submit-btn">Gửi dữ liệu</button>
-              <button type="button" class="clear-btn" onclick="clearForm('auto-form')">Clear</button>
+              <button type="button" class="clear-btn" onclick="clearForm('auto-form')">Xóa dữ liệu</button>
             </div>
           </form>
         </div>
@@ -49,7 +51,7 @@
             <div class="form-group">
               <label for="manual-project" class="form-label">Lựa chọn project</label>
               <select name="manual-project" id="manual-project" class="form-select" required>
-                <option value="" disabled selected>Chọn 1 project</option>
+                <option value="" disabled selected>Chọn Project</option>
                 <option value="hay-ho-corner">Hay Ho Corner</option>
                 <option value="nha-cua-han">Nhà của HAN</option>
                 <option value="taptica">Taptica</option>
@@ -65,7 +67,7 @@
               <textarea name="original-content" id="original-content" rows="5" class="form-textarea" required></textarea>
             </div>
             <div class="form-group">
-              <label for="img-link" class="form-label">Img Link</label>
+              <label for="img-link" class="form-label">Link hình ảnh / Video</label>
               <textarea name="img-link" id="img-link" rows="2" class="form-textarea"></textarea>
             </div>
             <div class="form-group">
@@ -74,14 +76,51 @@
             </div>
             <div class="form-actions">
               <button type="submit" class="submit-btn">Gửi dữ liệu</button>
-              <button type="button" class="clear-btn" onclick="clearForm('manual-form-content')">Clear</button>
+              <button type="button" class="clear-btn" onclick="clearForm('manual-form-content')">Xóa dữ liệu</button>
+            </div>
+          </form>
+        </div>
+        <div id="transcript-form" class="tab-content">
+          <form id="transcript-form-content" action="#" method="POST">
+            <div class="form-header">
+              <h2 class="form-title">Transcript YT</h2>
+              <p class="form-description">Vui lòng nhập thông tin chi tiết cho Transcript Youtube.</p>
+            </div>
+            <div class="form-group">
+              <label for="transcript-project" class="form-label">Lựa chọn project</label>
+              <select name="transcript-project" id="transcript-project" class="form-select" required>
+                <option value="" disabled selected>Chọn Project</option>
+                <option value="hay-ho-corner">Hay Ho Corner</option>
+                <option value="nha-cua-han">Nhà của HAN</option>
+                <option value="taptica">Taptica</option>
+                <option value="gau-meo">Gấu mèo</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="youtube-url" class="form-label">Link video Youtube</label>
+              <input type="text" name="youtube-url" id="youtube-url" class="form-input" required />
+            </div>
+            <div class="form-group">
+              <label for="transcript-original-content" class="form-label">Transcript</label>
+              <textarea name="transcript-original-content" id="transcript-original-content" rows="5" class="form-textarea" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="transcript-img-link" class="form-label">Link hình ảnh / Video</label>
+              <textarea name="transcript-img-link" id="transcript-img-link" rows="2" class="form-textarea"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="transcript-affiliate-link" class="form-label">Affiliate Link</label>
+              <textarea name="transcript-affiliate-link" id="transcript-affiliate-link" rows="2" class="form-textarea"></textarea>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="submit-btn">Gửi dữ liệu</button>
+              <button type="button" class="clear-btn" onclick="clearForm('transcript-form-content')">Xóa dữ liệu</button>
             </div>
           </form>
         </div>
         <div id="status-message"></div>
       </div>
     </div>
-    <script src="script.js"></script>
+    <script src="./script.js"></script>
   </body>
-
 </html>
