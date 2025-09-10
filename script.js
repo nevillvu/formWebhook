@@ -1,4 +1,4 @@
-const WEBHOOK_URL = 'https://n8n.sysflow.me/webhook-test/inputForm';
+const WEBHOOK_URL = 'https://n8n.sysflow.me/webhook/inputForm';
 
 let lastSubmitTime = 0;
 const RATE_LIMIT_SECONDS = 10;
@@ -180,4 +180,5 @@ document.addEventListener('keydown', function(e) {
   }
 
 });
+
 
