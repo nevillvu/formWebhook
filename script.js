@@ -7,7 +7,8 @@ const supportedDomains = [
   "genk.vn",
   "vatvostudio.vn",
   "9to5mac.com",
-  "macrumors.com"
+  "macrumors.com",
+  "24h.com.vn"
 ];
 
 // Chức năng chuyển tab
@@ -180,5 +181,6 @@ document.addEventListener('keydown', function(e) {
   }
 
 });
+
 
 
