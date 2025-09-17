@@ -36,6 +36,15 @@
               <input type="text" name="auto-text-input" id="auto-text-input" class="form-input" required />
               <div id="domain-status" style="margin-top:4px;font-size:0.95em;"></div>
             </div>
+            <div class="post-row">
+              <label class="post-label">
+                <input type="checkbox" id="post-now-auto" class="post-checkbox">
+                Đăng ngay
+              </label>
+              <input type="text" id="schedule-auto" class="post-schedule" placeholder="Nhập UNIX timestamp..." style="display:none;">
+              <span id="schedule-auto-error" class="post-error"></span>
+              <span id="schedule-auto-convert" class="post-convert"></span>
+            </div>
             <div class="form-actions">
               <button type="submit" class="submit-btn">Gửi dữ liệu</button>
               <button type="button" class="clear-btn" onclick="clearForm('auto-form')">Xóa dữ liệu</button>
@@ -74,6 +83,14 @@
               <label for="affiliate-link" class="form-label">Affiliate Link</label>
               <textarea name="affiliate-link" id="affiliate-link" rows="2" class="form-textarea"></textarea>
             </div>
+            <div class="post-row">
+              <label class="post-label">
+                <input type="checkbox" id="post-now-info" class="post-checkbox">
+                Đăng ngay
+              </label>
+              <input type="text" id="schedule-info" class="post-schedule" placeholder="Nhập UNIX timestamp..." style="display:none;">
+              <span id="schedule-info-error" class="post-error"></span>
+            </div>
             <div class="form-actions">
               <button type="submit" class="submit-btn">Gửi dữ liệu</button>
               <button type="button" class="clear-btn" onclick="clearForm('manual-form-content')">Xóa dữ liệu</button>
@@ -111,6 +128,14 @@
             <div class="form-group">
               <label for="transcript-affiliate-link" class="form-label">Affiliate Link</label>
               <textarea name="transcript-affiliate-link" id="transcript-affiliate-link" rows="2" class="form-textarea"></textarea>
+            </div>
+            <div class="post-row">
+              <label class="post-label">
+                <input type="checkbox" id="post-now-transcript" class="post-checkbox">
+                Đăng ngay
+              </label>
+              <input type="text" id="schedule-transcript" class="post-schedule" placeholder="Nhập UNIX timestamp..." style="display:none;">
+              <span id="schedule-transcript-error" class="post-error"></span>
             </div>
             <div class="form-actions">
               <button type="submit" class="submit-btn">Gửi dữ liệu</button>

@@ -1,4 +1,4 @@
-const WEBHOOK_URL = 'https://n8n.sysflow.me/webhook/inputForm';
+const WEBHOOK_URL = 'https://n8n.sysflow.me/webhook-test/inputForm';
 
 let lastSubmitTime = 0;
 const RATE_LIMIT_SECONDS = 10;
@@ -168,6 +168,57 @@ document.getElementById('auto-text-input').addEventListener('input', function() 
   }
 });
 
+function setupPostNow(tab) {
+  const cb = document.getElementById(`post-now-${tab}`);
+  const input = document.getElementById(`schedule-${tab}`);
+  const error = document.getElementById(`schedule-${tab}-error`);
+  const convert = document.getElementById(`schedule-${tab}-convert`);
+  if (!cb) return;
+  cb.addEventListener('change', () => {
+    if (cb.checked) {
+      input.style.display = 'block';
+      setTimeout(() => input.classList.add('show'), 10);
+    } else {
+      input.classList.remove('show');
+      setTimeout(() => input.style.display = 'none', 300);
+      error.textContent = '';
+      if (convert) {
+        convert.textContent = '';
+        convert.classList.remove('show');
+      }
+    }
+  });
+  input.addEventListener('input', () => {
+    const val = input.value.trim();
+    if (!/^\d{10,}$/.test(val)) {
+      error.textContent = 'Sai định dạng UNIX timestamp';
+      if (convert) {
+        convert.textContent = '';
+        convert.classList.remove('show');
+      }
+    } else {
+      error.textContent = '';
+      // Convert timestamp
+      const date = new Date(Number(val) * 1000);
+      const yyyy = date.getFullYear();
+      const mm = String(date.getMonth() + 1).padStart(2, '0');
+      const dd = String(date.getDate()).padStart(2, '0');
+      const hh = String(date.getHours()).padStart(2, '0');
+      const min = String(date.getMinutes()).padStart(2, '0');
+      const ss = String(date.getSeconds()).padStart(2, '0');
+      const formatted = `${yyyy}-${mm}-${dd} ${hh}:${min}:${ss}`;
+      if (convert) {
+        convert.textContent = formatted;
+        convert.classList.add('show');
+      }
+    }
+  });
+}
+setupPostNow('auto');
+setupPostNow('info');
+setupPostNow('list');
+setupPostNow('transcript');
+
 // Chặn chuột phải và F12
 document.addEventListener('contextmenu', function(e) {
   e.preventDefault();
@@ -179,8 +230,4 @@ document.addEventListener('keydown', function(e) {
     e.preventDefault();
     updateStatus('Công cụ nhà phát triển đã bị chặn. ⛔', 'info');
   }
-
 });
-
-
-

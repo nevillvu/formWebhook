@@ -234,6 +234,91 @@ body {
   background: #f5f3ff;
 }
 
+/* Post styles */
+.post-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  min-height: 40px; /* Đặt chiều cao tối thiểu đủ cho cả khi hiện trường nhập */
+  /* Nếu muốn mượt hơn nữa, có thể dùng transition cho min-height */
+  transition: min-height 0.3s cubic-bezier(.4,0,.2,1);
+}
+.post-label {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #ee4d2d;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0; /* Thêm dòng này để label không bị co */
+  min-width: 80px; /* Có thể tăng lên nếu cần */
+}
+.post-checkbox {
+  margin-right: 6px;
+  accent-color: #ee4d2d;
+}
+.post-schedule {
+  flex: 1;
+  padding: 7px 8px;
+  border: 1px solid #ee4d2d;
+  border-radius: 4px;
+  font-size: 14px;
+  background: #fff;
+  color: #222;
+  outline: none;
+  margin-left: 8px;
+  opacity: 0;
+  max-width: 0;
+  pointer-events: none;
+  transition: 
+    opacity 0.3s cubic-bezier(.4,0,.2,1),
+    max-width 0.4s cubic-bezier(.4,0,.2,1),
+    margin-left 0.3s cubic-bezier(.4,0,.2,1),
+    padding 0.3s cubic-bezier(.4,0,.2,1),
+    border-width 0.3s cubic-bezier(.4,0,.2,1);
+  overflow: hidden;
+  padding-left: 0;
+  padding-right: 0;
+  border-width: 0;
+  height: 36px; /* Đặt chiều cao cố định cho input để không thay đổi layout */
+  box-sizing: border-box;
+}
+.post-schedule.show {
+  opacity: 1;
+  max-width: 180px;
+  pointer-events: auto;
+  margin-left: 8px;
+  padding-left: 7px;
+  padding-right: 8px;
+  border-width: 1px;
+}
+.post-error {
+  color: #d93d1a;
+  font-size: 12px;
+  margin-left: 8px;
+  min-width: 80px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 160px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.post-convert {
+  margin-left: 8px;
+  color: #059669;
+  font-size: 13px;
+  font-weight: 500;
+  min-width: 120px;
+  transition: opacity 0.2s;
+  opacity: 0;
+}
+.post-convert.show {
+  opacity: 1;
+}
+
 /* Responsive */
 @media (max-width: 900px) {
   .form-wrapper {
