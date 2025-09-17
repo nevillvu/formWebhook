@@ -39,9 +39,19 @@ body {
   text-align: center;
 }
 .form-title {
-  font-size: 1.875rem;
-  font-weight: 700;
-  color: #1f2937;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #4f46e5;
+  text-align: center;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(90deg, #4f46e5 60%, #ee4d2d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  text-shadow: 0 2px 8px rgba(79,70,229,0.08), 0 1px 2px rgba(238,77,45,0.08);
+  transition: font-size 0.3s;
 }
 .form-description {
   margin-top: 0.5rem;
@@ -296,13 +306,12 @@ body {
 }
 .post-error {
   color: #d93d1a;
-  font-size: 12px;
+  font-size: 14px;
   margin-left: 8px;
   min-width: 80px;
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 160px;
+  max-width: 200px; /* Tăng lên để đủ hiển thị */
   display: inline-block;
   vertical-align: middle;
 }

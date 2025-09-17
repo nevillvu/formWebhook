@@ -206,7 +206,7 @@ function setupPostNow(tab) {
   input.addEventListener('input', () => {
     const val = input.value.trim();
     if (!/^\d{10,}$/.test(val)) {
-      error.textContent = 'Sai định dạng UNIX timestamp hợp lệ!';
+      error.textContent = 'Sai định dạng UNIX Timestamp';
       if (convert) {
         convert.textContent = '';
         convert.classList.remove('show');
