@@ -71,6 +71,21 @@ async function sendData(formElement, formType) {
     });
     data.formType = formType;
 
+    // Lấy thêm trạng thái checkbox và timestamp nếu có
+    if (formType === 'auto') {
+        data.postNow = document.getElementById('post-now-auto').checked;
+        data.schedule = document.getElementById('schedule-auto').value.trim();
+    } else if (formType === 'manual') {
+        data.postNow = document.getElementById('post-now-info').checked;
+        data.schedule = document.getElementById('schedule-info').value.trim();
+    } else if (formType === 'list') {
+        data.postNow = document.getElementById('post-now-list').checked;
+        data.schedule = document.getElementById('schedule-list').value.trim();
+    } else if (formType === 'transcript') {
+        data.postNow = document.getElementById('post-now-transcript').checked;
+        data.schedule = document.getElementById('schedule-transcript').value.trim();
+    }
+
     try {
         const response = await fetch(WEBHOOK_URL, {
             method: 'POST',
@@ -191,7 +206,7 @@ function setupPostNow(tab) {
   input.addEventListener('input', () => {
     const val = input.value.trim();
     if (!/^\d{10,}$/.test(val)) {
-      error.textContent = 'Sai định dạng UNIX timestamp';
+      error.textContent = 'Sai định dạng UNIX timestamp hợp lệ!';
       if (convert) {
         convert.textContent = '';
         convert.classList.remove('show');
@@ -218,6 +233,14 @@ setupPostNow('auto');
 setupPostNow('info');
 setupPostNow('list');
 setupPostNow('transcript');
+
+// Lấy trạng thái checkbox và giá trị timestamp
+const isChecked = document.getElementById('post-now-auto').checked;
+const unixTimestamp = document.getElementById('schedule-auto').value.trim();
+
+// Ví dụ log ra console
+console.log('Đăng ngay:', isChecked);
+console.log('UNIX timestamp:', unixTimestamp);
 
 // Chặn chuột phải và F12
 document.addEventListener('contextmenu', function(e) {
