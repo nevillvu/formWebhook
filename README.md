@@ -1,3 +1,7 @@
+📦 Version v1.5.0
+📜 Changelog:
+- v1.5 (2025-09-17): Thêm checkbox Post Now.
+
 # 📌 Post Scheduling Feature
 
 ## ✅ Tính năng
