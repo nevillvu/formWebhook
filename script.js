@@ -1,4 +1,4 @@
-const WEBHOOK_URL = 'https://n8n.sysflow.me/webhook-test/inputForm';
+const WEBHOOK_URL = 'https://n8n.sysflow.me/webhook/inputForm';
 
 let lastSubmitTime = 0;
 const RATE_LIMIT_SECONDS = 10;
@@ -254,3 +254,39 @@ document.addEventListener('keydown', function(e) {
     updateStatus('Công cụ nhà phát triển đã bị chặn. ⛔', 'info');
   }
 });
+
+// Hàm kiểm tra nhiều link hợp lệ (cho phép bỏ trống)
+function isValidMultiUrl(str) {
+  if (!str.trim()) return true;
+  const links = str.split(/\s+|\n+/).filter(Boolean);
+  return links.every(link => {
+    try {
+      const u = new URL(link.trim());
+      return u.protocol === "http:" || u.protocol === "https:";
+    } catch {
+      return false;
+    }
+  });
+}
+
+// Hàm gắn kiểm tra realtime cho từng trường
+function setupLinkValidation(inputId, errorId) {
+  const input = document.getElementById(inputId);
+  const error = document.getElementById(errorId);
+  if (!input || !error) return;
+  function validate() {
+    if (!isValidMultiUrl(input.value)) {
+      error.textContent = "Sai định dạng link!";
+    } else {
+      error.textContent = "";
+    }
+  }
+  input.addEventListener('input', validate);
+  input.addEventListener('blur', validate);
+}
+
+// Gắn cho các trường ở cả 2 tab
+setupLinkValidation('img-link', 'img-link-error');
+setupLinkValidation('affiliate-link', 'affiliate-link-error');
+setupLinkValidation('transcript-img-link', 'transcript-img-link-error');
+setupLinkValidation('transcript-affiliate-link', 'transcript-affiliate-link-error');
