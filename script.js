@@ -289,4 +289,5 @@ function setupLinkValidation(inputId, errorId) {
 setupLinkValidation('img-link', 'img-link-error');
 setupLinkValidation('affiliate-link', 'affiliate-link-error');
 setupLinkValidation('transcript-img-link', 'transcript-img-link-error');
+
 setupLinkValidation('transcript-affiliate-link', 'transcript-affiliate-link-error');
