@@ -1,12 +1,13 @@
 # 📦 Version  
-**v1.5.0**  
+**v1.5.1**  
 
 ---
 
 # 📜 Changelog  
 - **v1.5.0 (2025-09-17):** Thêm checkbox **Post Now**  
   > 📌 Chi tiết xem tại phần *Post Scheduling Feature* bên dưới.  
-
+- **v1.5.1 (2025-09-25):** Chặn index các công cụ tìm kiếm
+  > 📌 Chi tiết xem tại phần *Post Scheduling Feature* bên dưới.  
 ---
 
 # 📌 Post Scheduling Feature *(bổ sung cho v1.5.0)*  
