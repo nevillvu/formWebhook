@@ -8,7 +8,8 @@ const supportedDomains = [
   "vatvostudio.vn",
   "9to5mac.com",
   "macrumors.com",
-  "24h.com.vn"
+  "24h.com.vn",
+  "betterchoice.vn"
 ];
 
 // Chức năng chuyển tab
@@ -291,3 +292,4 @@ setupLinkValidation('affiliate-link', 'affiliate-link-error');
 setupLinkValidation('transcript-img-link', 'transcript-img-link-error');
 
 setupLinkValidation('transcript-affiliate-link', 'transcript-affiliate-link-error');
+
